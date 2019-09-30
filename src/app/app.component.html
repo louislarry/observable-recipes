@@ -1,0 +1,28 @@
+<h2>Recipes</h2>
+
+<form [formGroup]="optionForm">
+	<p>
+		filter:
+		<input type="text" formControlName="searchFilter">
+    <br/>
+    hide disabled recipes
+    <input type="checkbox" formControlName="hideDisabledRecipes">
+  </p>
+</form>
+
+<h3>options</h3>
+{{ optionForm.value | json }}
+
+
+<h3>result</h3>
+<ul *ngIf="(appService.filteredRecipes$ | async) as recipes">
+  <li 
+    *ngFor="let recipe of recipes"
+    [ngStyle]="{
+      'color': recipe.isDisabled ? 'darkgray' : '',
+      'text-decoration': recipe.isDisabled ? 'line-through' : ''
+    }"
+  > 
+    {{ recipe.name }}
+  </li>
+</ul>
